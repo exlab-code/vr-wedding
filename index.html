@@ -181,11 +181,20 @@ window.onload = function() {
     <img id="berlin-38" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-38.png" />
     <a-mixin id="img-berlin-38" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-38; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
 
+     <img id="berlin-h-3" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-3.png" />
+    <a-mixin id="img-berlin-h-3" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-3; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+    
+
+
+
+
     <audio id="irene" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/irene.m4a" preload="auto"></audio>
     <audio id="sibylle" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/sibylle.m4a" preload="auto"></audio>
     <audio id="stephan" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/stephan.mp3" preload="auto"></audio>
     <audio id="izamar" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/izamar.m4a" preload="auto"></audio>
     <audio id="mexico" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/mexico.m4a" preload="auto"></audio>
+     <audio id="kuh" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/kuhglocken.m4a" preload="auto"></audio>
 
   
   
@@ -195,14 +204,12 @@ window.onload = function() {
     
 <a-entity postion="0 0 0"> <a-camera id="moi"><a-cursor></a-cursor></a-camera></a-entity>
 
-<a-box sound="src: #mexico; on: click; loop: true; volume: 0; distanceModel: linear; refDistance: 0.6; rolloffFactor: 0.35" material="" geometry=""></a-box>
+<a-box sound="src: #irene; on: click; loop: true; volume: 1; refDistance: 2; rolloffFactor: 3" material="" geometry=""></a-box>
 
 
 <a-entity light="type: ambient; color: #CCC"></a-entity>
         
-<a-entity mixin="img-berlin-1" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #stephan; loop:true;  autoplay:true; volume:1"
-
-></a-entity>
+<a-entity mixin="img-berlin-1" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #stephan; loop:true;  refDistance: 0.5; rolloffFactor: 10; autoplay:true; volume:0.8"></a-entity>
 <a-entity mixin="img-berlin-2" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
 <a-entity mixin="img-berlin-3" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
 <a-entity mixin="img-berlin-4" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
@@ -218,7 +225,9 @@ window.onload = function() {
 <a-entity mixin="img-berlin-14" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
 <a-entity mixin="img-berlin-15" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
 
-<a-entity mixin="img-berlin-34" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #izamar; autoplay:true; loop:true;  volume:1"></a-entity>
+<a-entity mixin="img-berlin-34" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #izamar; autoplay:true; loop:true;  refDistance: 2; rolloffFactor: 10; volume:1"></a-entity>
+
+<a-entity mixin="img-berlin-h-3" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #lena; autoplay:true; loop:true;  refDistance: 2; rolloffFactor: 10; volume:1"></a-entity>
 
 
 
