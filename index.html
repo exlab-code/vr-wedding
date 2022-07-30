@@ -59,7 +59,7 @@ window.onload = function() {
 </button>
 </div> 
     
-<a-scene>
+<a-scene fog="color:  #AAB;  far:  30;  near:  0;  density:  0.00050">
  
 
 
@@ -181,8 +181,25 @@ window.onload = function() {
     <img id="berlin-38" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-38.png" />
     <a-mixin id="img-berlin-38" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-38; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
 
-     <img id="berlin-h-3" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-3.png" />
+     <img id="berlin-h-1" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-1.png" />
+    <a-mixin id="img-berlin-h-1" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-1; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+<img id="berlin-h-2" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-2.png" />
+    <a-mixin id="img-berlin-h-2" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-2; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+    <img id="berlin-h-3" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-3.png" />
     <a-mixin id="img-berlin-h-3" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-3; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+    <img id="berlin-h-4" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-4.png" />
+    <a-mixin id="img-berlin-h-4" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-4; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+    <img id="berlin-h-5" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-5.png" />
+    <a-mixin id="img-berlin-h-5" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-5; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+    <img id="berlin-h-6" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-6.png" />
+    <a-mixin id="img-berlin-h-6" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-6; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+    <img id="berlin-h-7" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-7.png" />
+    <a-mixin id="img-berlin-h-7" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-7; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+    <img id="berlin-h-8" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-8.png" />
+    <a-mixin id="img-berlin-h-8" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-8; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+    <img id="berlin-h-9" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-9.png" />
+    <a-mixin id="img-berlin-h-9" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-9; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
 
     
 
@@ -198,7 +215,10 @@ window.onload = function() {
 
       <audio id="lena" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/lena.mp4" preload="auto"></audio>
 
-  
+   <a-asset-item id="cake" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/models/wedding_cake/scene.gltf">
+      
+       
+       </a-asset-item>
   
   </a-assets>
     
@@ -209,12 +229,12 @@ window.onload = function() {
 <a-box sound="src: #irene; on: click; loop: true; volume: 1; refDistance: 0.5; rolloffFactor: 10" material="" geometry=""></a-box>
 
 
-<a-entity light="type: ambient; color: #CCC"></a-entity>
+<a-entity light="type: ambient; color: #fff"></a-entity>
 <a-entity mixin="img-berlin-1" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #stephan; loop:true;  refDistance: 0.5; rolloffFactor: 10; autoplay:true; volume:0.8"></a-entity>
         
 <a-entity mixin="img-berlin-2" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
 <a-entity mixin="img-berlin-3" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
-<a-entity mixin="img-berlin-4" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-berlin-4"  random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
 <a-entity mixin="img-berlin-5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
 <a-entity mixin="img-berlin-6" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
 <a-entity mixin="img-berlin-7" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
@@ -226,13 +246,51 @@ window.onload = function() {
 <a-entity mixin="img-berlin-13" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
 <a-entity mixin="img-berlin-14" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
 <a-entity mixin="img-berlin-15" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-16" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-17" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-18"  random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-berlin-19" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-20" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-21" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-berlin-22" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-23" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-24" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-berlin-25" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-26" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-27" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-berlin-28" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-29" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-30" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-31" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-32"  random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-berlin-33" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-34" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-35" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-berlin-36" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-37" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-38" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
 
-<a-entity mixin="img-berlin-34" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #izamar; autoplay:true; loop:true;  refDistance: 0.5; rolloffFactor: 10; volume:0.8"></a-entity>
+<a-entity mixin="img-berlin-h-1" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+
+<a-entity mixin="img-berlin-h-3" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-berlin-h-4" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-h-5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+
+<a-entity mixin="img-berlin-h-6" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #izamar; autoplay:true; loop:true;  refDistance: 0.5; rolloffFactor: 10; volume:0.8"></a-entity>
 
 <a-entity mixin="img-berlin-h-3" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #lena; autoplay:true; loop:true;  refDistance: 0.5; rolloffFactor: 10; volume:1"></a-entity>
 
+<a-entity mixin="img-berlin-h-7" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-berlin-h-8" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+<a-entity mixin="img-berlin-h-9" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
 
-
+<a-entity gltf-model="#cake" position="-1 0.5 -3" rotation="0 0 0" animation="property: rotation; dur:4000; to:0 360 ; loop: true; easing:linear;">
+     <a-animation attribute="rotation"
+                    dur="3000"
+                    to="0 360 0"
+                    repeat="indefinite"
+                    easing= "linear"></a-animation>
+      </a-entity>
 
 
   <a-sky material="shader: gradient; topColor: 255 255 255; bottomColor: 0 121 255;"></a-sky>
