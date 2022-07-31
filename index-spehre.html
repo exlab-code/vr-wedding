@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+     
+      <script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
+  
+
   </head>
   <body>
-    <a-scene>
+    <a-scene >
       
+      <a-assets>
+      <a-asset-item id="peony" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/models/peony_at_home/scene.gltf">
+      
+       
+       </a-asset-item>
+
+      </a-assets>
+
     
     <a-entity camera wasd-controls look-controls>
   <a-entity cursor
@@ -18,24 +30,36 @@
       
 
 
-   <a-entity id="scene1">
-    <a-box onclick="nextScene()" position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+   <a-entity  id="start">
+    <a-box onclick="gotoberlin()" position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
       <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder id="cyl" position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+      
       <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
       <a-sky color="blue"></a-sky>
-      
+      <a-entity position="0 2.25 -15" particle-system="preset: rain"></a-entity>
     </a-entity>
 
-    <a-entity id="scene2" visible="false">
-      <a-box color="green" position="0 2 -5"> </a-box>
+    <a-entity id="berlin" visible="false">
+
+      <a-entity gltf-model="#peony" position="-1 0.5 -3" rotation="0 0 0"  >
+
+      </a-entity>
+
+
+     
+      
       <a-box color="yellow" position="5 0 -5"> </a-box>
-      <a-box color="blue" position="0 0 -1"> </a-box>
+      <a-box color="blue" onclick="gotogun()" position="0 0 -1"> </a-box>
       <a-sky color="yellow"></a-sky>
     </a-entity>
     
     
       
+
+ <a-entity id="gun" visible="false">
+<a-cylinder id="cyl" onclick="gotoberlin()" position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+ </a-entity>
+
       
     </a-scene>
     
@@ -45,10 +69,19 @@
     <script type="text/javascript">
 
 
-  function nextScene() {
-    document.getElementById('scene1').setAttribute('visible', 'false')
-    document.getElementById('scene2').setAttribute('visible', 'true')
+  function gotoberlin() {
+    document.getElementById('start').setAttribute('visible', 'false')
+    document.getElementById('berlin').setAttribute('visible', 'true')
+    document.getElementById('gun').setAttribute('visible', 'false')
   }
+
+   function gotogun() {
+    document.getElementById('start').setAttribute('visible', 'false')
+    document.getElementById('berlin').setAttribute('visible', 'false')
+    document.getElementById('gun').setAttribute('visible', 'true')
+  }
+
+
   </script>
 
 
