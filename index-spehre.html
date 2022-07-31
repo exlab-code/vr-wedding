@@ -8,7 +8,7 @@
       
     
     <a-entity camera wasd-controls look-controls>
-  <a-entity cursor="fuse: true; fuseTimeout: 500"
+  <a-entity cursor
             position="0 0 -1"
             geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
             material="color: black; shader: flat">
@@ -21,7 +21,7 @@
    <a-entity id="scene1">
     <a-box onclick="nextScene()" position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
       <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+      <a-cylinder id="cyl" position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
       <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
       <a-sky color="blue"></a-sky>
       
@@ -43,6 +43,7 @@
 
     
     <script type="text/javascript">
+
 
   function nextScene() {
     document.getElementById('scene1').setAttribute('visible', 'false')

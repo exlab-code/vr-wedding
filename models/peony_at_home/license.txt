@@ -1,0 +1,11 @@
+Model Information:
+* title:	Peony at home
+* source:	https://sketchfab.com/3d-models/peony-at-home-c95c7a325d6a4fb4977204b87d77c803
+* author:	HoangHiepVu (https://sketchfab.com/HoangHiepVu)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Peony at home" (https://sketchfab.com/3d-models/peony-at-home-c95c7a325d6a4fb4977204b87d77c803) by HoangHiepVu (https://sketchfab.com/HoangHiepVu) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
