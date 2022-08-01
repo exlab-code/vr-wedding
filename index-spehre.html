@@ -6,14 +6,17 @@
     <script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
      <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
      <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+     <script src="https://unpkg.com/aframe-event-set-component@5.x.x/dist/aframe-event-set-component.min.js"></script>
 
      <script>
 
      </script>
 
   </head>
+
+
   <body>
-    <a-scene fog="color: yellow;  far:  30;  near:  0;  density:  0.00050">
+    <a-scene >
       
       <a-assets>
 
@@ -360,14 +363,15 @@
 
      <a-asset-item id="peony" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/models/peony_at_home/scene.gltf"></a-asset-item> 
 
+     <a-asset-item id="cake" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/models/wedding_cake/scene.gltf">
 
-      <img id="postcard-berlin" src="img/berlin-postcard.jpeg">
-      <img id="postcard-gunzenhausen" src="img/gunzenhausen-postcard.jpeg">
+      <img id="postcard-berlin" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-postcard.jpeg">
+      <img id="postcard-gunzenhausen" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gunzenhausen-postcard.jpeg">
       </a-assets>
 
  
   
-    <a-entity postion="0 0 0"> <a-camera id="moi" wasd-controls="fly:  true"><a-cursor></a-cursor></a-camera></a-entity>
+    <a-entity id="camera" position="0 -6 1"> <a-camera id="moi" wasd-controls="fly:  true"><a-cursor></a-cursor></a-camera></a-entity>
  
 
 
@@ -375,20 +379,23 @@
    <a-entity  id="start">
 
 
-    <a-entity position="-1.5 2 -3" class="link"
-  geometry="primitive: plane; height: 1; width: 2"
-  material="shader: flat; src: #postcard-berlin"
-  sound="on: click; src: #click-sound"></a-entity>
+  
+    <a-entity play-audio-berlin stop-audio-gunzenhausen onclick="gotoberlin()" position="-1.5 -4 -3" class="link"
+    geometry="primitive: box; depth: 0.01 height: 1; width: 1.418 "
+    material="shader: flat; src: #postcard-berlin"
+    sound="on: click; src: #click-sound"
+    event-set__mouseenter="scale: 1.2 1.2 1"
+    event-set__mouseleave="scale: 1 1 1">
+    </a-entity>
 
-  <a-entity  position="1.3 2 -3"  class="link"
-  geometry="primitive: plane; height: 1; width: 2"
+  <a-entity  stop-audio-berlin play-audio-gunzenhausen onclick="gotogun()" position="1.3 -4 -3"  class="link"
+  geometry="primitive: box; depth: 0.01; height: 1; width: 1.38"
   material="shader: flat; src: #postcard-gunzenhausen"
-  sound="on: click; src: #click-sound"></a-entity>
+  sound="on: click; src: #click-sound"
+  event-set__mouseenter="scale: 1.2 1.2 1"
+  event-set__mouseleave="scale: 1 1 1">
+  </a-entity>
 
-
-    <a-box play-audio-berlin onclick="gotoberlin()" position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-      <a-sphere  position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-plane play position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
       <a-sky color="blue"></a-sky>
      
     </a-entity>
@@ -459,7 +466,13 @@
 
     
       <a-box color="yellow" position="5 0 -5"> </a-box>
-      <a-box color="blue" stop-audio-berlin play-audio-gunzenhausen onclick="gotogun()" position="0 0 -1"> </a-box>
+      <a-entity  stop-audio-berlin play-audio-gunzenhausen onclick="gotogun()" position="0.7 8 3.2"  class="link"
+  geometry="primitive: box; depth: 0.01; height: 1; width: 1.38"
+  material="shader: flat; src: #postcard-gunzenhausen"
+  sound="on: click; src: #click-sound"
+  event-set__mouseenter="scale: 1.2 1.2 1"
+  event-set__mouseleave="scale: 1 1 1">
+  </a-entity>
 
       <a-sky color="yellow"></a-sky>
     </a-entity>
@@ -467,10 +480,31 @@
     
       
 
- <a-entity fog="color: #fff;" id="gun" visible="false">
+ <a-entity id="gun" visible="false">
 
   <a-sky material="color:  #22223b;  side:  back;  shader:  flat;  npot:  true;  offset:  [object Object];  repeat:  [object Object];  fog:  false"></a-sky>
-    <a-cylinder id="cyl" play-audio-berlin stop-audio-gunzenhausen onclick="gotoberlin()" position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+    
+
+    <a-entity play-audio-berlin onclick="gotoberlin()" stop-audio-gunzenhausen position="-0.9s 2.98 -3" rotation="0 267 -39" scale="0.5 0.5 0.5" class="link" side="front"
+    geometry="primitive: plane; height: 1; width: 1.418"
+    material="shader: flat; src: #postcard-berlin"
+    sound="on: click; src: #click-sound"
+    event-set__mouseenter="scale: 1.2 1.2 1"
+    event-set__mouseleave="scale: 1 1 1"
+    animation="property: rotation; dur:4000; to:0 627 -39 ; loop: true; easing:linear;">
+    </a-entity>
+    <a-entity play-audio-berlin onclick="gotoberlin()" stop-audio-gunzenhausen position="-0.8 2.98 -3" rotation="0 267 -39" scale="0.5 0.5 0.5" class="link" side="back"
+    geometry="primitive: plane; height: 1; width: 1.418"
+    material="shader: flat; src: #postcard-berlin"
+    sound="on: click; src: #click-sound"
+    event-set__mouseenter="scale: 1.2 1.2 1"
+    event-set__mouseleave="scale: 1 1 1"
+    animation="property: rotation; dur:4000; to:0 627 -39 ; loop: true; easing:linear;">
+    </a-entity>
+
+
+    <a-entity gltf-model="#cake" position="-1 0.5 -3" scale="2 2 2" rotation="0 0 0" animation="property: rotation; dur:4000; to:0 360 0 ; loop: true; easing:linear;">
+      </a-entity>
  
 
     <a-entity mixin="img-gun-1" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
@@ -548,13 +582,15 @@
     document.getElementById('start').setAttribute('visible', 'false')
     document.getElementById('berlin').setAttribute('visible', 'true')
     document.getElementById('gun').setAttribute('visible', 'false')
+    document.getElementById('camera').setAttribute('position', '12 4 0.67')
+    document.getElementById('camera').setAttribute('rotation', '0 90 0')
   }
 
    function gotogun() {
     document.getElementById('start').setAttribute('visible', 'false')
     document.getElementById('berlin').setAttribute('visible', 'false')
     document.getElementById('gun').setAttribute('visible', 'true')
-    document.getElementById('[fog]').setAttribute('color', '#fff')
+    document.getElementById('[fog]').setAttribute('position', '11 4 0.47')
   }
 
   AFRAME.registerComponent('play-audio-berlin', {
