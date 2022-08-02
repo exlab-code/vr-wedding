@@ -8,16 +8,45 @@
      <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
      <script src="https://unpkg.com/aframe-event-set-component@5.x.x/dist/aframe-event-set-component.min.js"></script>
      <script src="https://unpkg.com/aframe-play-sound-on-event@1.0.2/dist/aframe-play-sound-on-event.min.js"></script>
+     <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
      <script>
+window.onload = function(){ 
+    document.querySelector("button").onclick = function() { 
+  document.querySelector("#loading").style.display = "none"
+} 
+};
+
 
      </script>
+
+     <style type="text/css" media="screen">
+      
+
+
+      #loading {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  background-color: blue;
+  color: white;
+
+
+}
+
+.pink {background-color: #ffc7d2; border-color: #ffc7d2}
+
+
+       
+     </style>
 
   </head>
 
 
   <body>
-    <a-scene >
+    <a-scene light="defaultLightsEnabled: false" >
       
       <a-assets>
 
@@ -377,7 +406,7 @@
 
      <a-asset-item id="peony" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/models/peony_at_home/scene.gltf"></a-asset-item> 
 
-     <a-asset-item id="3dcake" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/models/wedding_cake/scene.gltf">
+     <a-asset-item id="3dcake" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/models/wedding_cake/scene.gltf"></a-asset-item>
 
       <img id="postcard-berlin" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-postcard.jpeg">
       <img id="postcard-gunzenhausen" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gunzenhausen-postcard.jpeg">
@@ -385,33 +414,42 @@
 
  
   
-    <a-entity id="camera" position="0 -6 1"> <a-camera id="moi" wasd-controls="fly:  true"><a-cursor></a-cursor></a-camera></a-entity>
+    <a-entity id="camera" position="0 -24 1"> <a-camera camera-logger id="moi" wasd-controls="fly:  true"><a-cursor></a-cursor></a-camera></a-entity>
  
+<div id="loading">
+  <div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-3.jpg" alt="" width="40%" height:auto>
+    <h1 class="display-5 fw-bold">Madlen & Julius Wedding Anniversary</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button type="button" class="btn btn-light btn-lg px-4 gap-3">Primary button</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
-
-   <a-entity  id="start">
+   <a-entity  id="start" visible="true">
 
 
   
-    <a-entity play-audio-berlin stop-audio-gunzenhausen onclick="gotoberlin()" position="-1.5 -4 -3" class="link"
+    <a-entity play-audio-berlin stop-audio-gunzenhausen onclick="gotoberlin()" position="-1.5 -22 -3" class="link"
     geometry="primitive: box; depth: 0.01 height: 1; width: 1.418 "
     material="shader: flat; src: #postcard-berlin"
     sound="src: #cake"
-    play-sound-on-event="mode: toggle-stop; event: mouseenter"
-    play-sound-on-event="mode: toggle-pause; event: mouseleave"
     event-set__mouseenter="scale: 1.2 1.2 1"
     event-set__mouseleave="scale: 1 1 1">
     </a-entity>
 
-  <a-entity  stop-audio-berlin play-audio-gunzenhausen onclick="gotogun()" position="1.3 -4 -3"  class="link"
+  <a-entity  stop-audio-berlin play-audio-gunzenhausen onclick="gotogun()" position="1.3 -22 -3"  class="link"
   geometry="primitive: box; depth: 0.01; height: 1; width: 1.38"
   material="shader: flat; src: #postcard-gunzenhausen"
   sound="src: #pizza"
-  play-sound-on-event="mode: toggle-stop; event: mouseenter"
-    play-sound-on-event="mode: stop; event: mouseleave"
+
+  
   event-set__mouseenter="scale: 1.2 1.2 1"
-  event-set__mouseleave="scale: 1 1 1">
+  event-set__mouseleave="scale: 1 1 1" >
   </a-entity>
 
       <a-sky color="blue"></a-sky>
@@ -421,70 +459,70 @@
     <a-entity id="berlin" visible="false">
     
 
-      <a-entity gltf-model="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/models/peony_at_home/scene.gltf" scale="3 3 3" position="0 -5.43322 13" rotation=""></a-entity>
+      <a-entity gltf-model="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/models/peony_at_home/scene.gltf" scale="2.1 2.1 2.1" position="0 -8.43322 9" rotation=""></a-entity>
 
 
       <a-entity>
 
-        <a-entity mixin="img-berlin-1" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+        <a-entity mixin="img-berlin-1" scale="1.5 1.5 1.5"  event-set__mouseleave="scale: 2 2 2" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
         
-        <a-entity mixin="img-berlin-2" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
-        <a-entity mixin="img-berlin-3" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12"></a-entity>
-        <a-entity mixin="img-berlin-4"  random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
-        <a-entity mixin="img-berlin-5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 14"></a-entity>
-        <a-entity mixin="img-berlin-6" random-spherical-position="lengthX: 180; lengthY: 180; radius: 15"></a-entity>
-        <a-entity mixin="img-berlin-7" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
-        <a-entity mixin="img-berlin-8" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
-        <a-entity mixin="img-berlin-9" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12"></a-entity>
-        <a-entity mixin="img-berlin-10" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
-        <a-entity mixin="img-berlin-11" random-spherical-position="lengthX: 180; lengthY: 180; radius: 14"></a-entity>
-        <a-entity mixin="img-berlin-12" random-spherical-position="lengthX: 180; lengthY: 180; radius: 15"></a-entity>
-        <a-entity mixin="img-berlin-13" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
-        <a-entity mixin="img-berlin-14" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
-        <a-entity mixin="img-berlin-15" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12"></a-entity>
-        <a-entity mixin="img-berlin-16" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13"></a-entity>
-        <a-entity mixin="img-berlin-17" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 14" sound="src: #irenebush; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
-        <a-entity mixin="img-berlin-18" random-spherical-position="lengthX: 180; lengthY: 180; radius: 15" ></a-entity>
-        <a-entity mixin="img-berlin-19" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" class="audio-berlin" sound="src: #stephan; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.6" event-set__mouseenter="scale: 1.5 1.5 1.5" event-set__mouseleave="scale: 1 1 1" ></a-entity>
-        <a-entity mixin="img-berlin-20" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
-        <a-entity mixin="img-berlin-21" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
-        <a-entity mixin="img-berlin-22" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" sound="src: #pizza; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
-        <a-entity mixin="img-berlin-23" random-spherical-position="lengthX: 180; lengthY: 180; radius: 14"></a-entity>
-        <a-entity mixin="img-berlin-24" random-spherical-position="lengthX: 180; lengthY: 180; radius: 15" ></a-entity>
-        <a-entity mixin="img-berlin-25" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #gerado; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
-        <a-entity mixin="img-berlin-26" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
-        <a-entity mixin="img-berlin-27" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
-        <a-entity mixin="img-berlin-28" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13"></a-entity>
-        <a-entity mixin="img-berlin-29" random-spherical-position="lengthX: 180; lengthY: 180; radius: 14"></a-entity>
-        <a-entity mixin="img-berlin-30" random-spherical-position="lengthX: 180; lengthY: 180; radius: 15"></a-entity>
-        <a-entity mixin="img-berlin-31" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
-        <a-entity mixin="img-berlin-32" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
-        <a-entity mixin="img-berlin-33" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12"></a-entity>
-        <a-entity mixin="img-berlin-34" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" class="audio-berlin" sound="src: #izamar; loop:true;  refDistance: 1; rolloffFactor: 20; volume:0.3"></a-entity>
-        <a-entity mixin="img-berlin-35" random-spherical-position="lengthX: 180; lengthY: 180; radius: 14" ></a-entity>
-        <a-entity mixin="img-berlin-36" random-spherical-position="lengthX: 180; lengthY: 180; radius: 15" class="audio-berlin" sound="src: #warthe; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
-        <a-entity mixin="img-berlin-37" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
-        <a-entity mixin="img-berlin-38" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" sound="src: #documents; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8" ></a-entity>
+        <a-entity mixin="img-berlin-2" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
+        <a-entity mixin="img-berlin-3" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12"></a-entity>
+        <a-entity mixin="img-berlin-4"   scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+        <a-entity mixin="img-berlin-5" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+        <a-entity mixin="img-berlin-6" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
+        <a-entity mixin="img-berlin-7" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+        <a-entity mixin="img-berlin-8" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13"></a-entity>
+        <a-entity mixin="img-berlin-9" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+        <a-entity mixin="img-berlin-10"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+        <a-entity mixin="img-berlin-11"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12"></a-entity>
+        <a-entity mixin="img-berlin-12"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13"></a-entity>
+        <a-entity mixin="img-berlin-13"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+        <a-entity mixin="img-berlin-14"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
+        <a-entity mixin="img-berlin-15"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12"></a-entity>
+        <a-entity mixin="img-berlin-16"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13"></a-entity>
+        <a-entity mixin="img-berlin-17"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #irenebush; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.2" event-set__mouseenter="sound.volume: 1" ></a-entity>
+        <a-entity mixin="img-berlin-18"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+        <a-entity mixin="img-berlin-19"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" class="audio-berlin" sound="src: #stephan; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.6" event-set__mouseenter="scale: 1.5 1.5 1.5" event-set__mouseleave="scale: 1 1 1" ></a-entity>
+        <a-entity mixin="img-berlin-20"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13"></a-entity>
+        <a-entity mixin="img-berlin-21"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+        <a-entity mixin="img-berlin-22"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" sound="src: #pizza; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
+        <a-entity mixin="img-berlin-23"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12"></a-entity>
+        <a-entity mixin="img-berlin-24"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+        <a-entity mixin="img-berlin-25"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #gerado; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
+        <a-entity mixin="img-berlin-26"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
+        <a-entity mixin="img-berlin-27"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+        <a-entity mixin="img-berlin-28"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13"></a-entity>
+        <a-entity mixin="img-berlin-29"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+        <a-entity mixin="img-berlin-30"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
+        <a-entity mixin="img-berlin-31"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12"></a-entity>
+        <a-entity mixin="img-berlin-32"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+        <a-entity mixin="img-berlin-33"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+        <a-entity mixin="img-berlin-34"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" class="audio-berlin" sound="src: #izamar; loop:true;  refDistance: 1; rolloffFactor: 20; volume:0.3"></a-entity>
+        <a-entity mixin="img-berlin-35"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+        <a-entity mixin="img-berlin-36"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" class="audio-berlin" sound="src: #warthe; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
+        <a-entity mixin="img-berlin-37"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+        <a-entity mixin="img-berlin-38"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" sound="src: #documents; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8" ></a-entity>
 
-        <a-entity mixin="img-berlin-h-1" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" sound="src: #erikacamping; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
+        <a-entity mixin="img-berlin-h-1" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" sound="src: #erikacamping; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
 
-        <a-entity mixin="img-berlin-h-3" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" sound="src: #coffee; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8" ></a-entity>
-        <a-entity mixin="img-berlin-h-4" random-spherical-position="lengthX: 180; lengthY: 180; radius: 14"></a-entity>
-        <a-entity mixin="img-berlin-h-5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 15"></a-entity>
+        <a-entity mixin="img-berlin-h-3" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" sound="src: #coffee; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8" ></a-entity>
+        <a-entity mixin="img-berlin-h-4" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+        <a-entity mixin="img-berlin-h-5" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
 
-        <a-entity mixin="img-berlin-h-6" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+        <a-entity mixin="img-berlin-h-6" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
 
-        <a-entity mixin="img-berlin-h-3" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" sound="src: #lena; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:1"></a-entity>
+        <a-entity mixin="img-berlin-h-3" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" sound="src: #lena; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:1"></a-entity>
 
-        <a-entity mixin="img-berlin-h-7" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
-        <a-entity mixin="img-berlin-h-8" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13"></a-entity>
+        <a-entity mixin="img-berlin-h-7" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+        <a-entity mixin="img-berlin-h-8" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
         
       <a-entity light="intensity: 0.0; castShadow: true" position="-0.5 3.0227 1" data-aframe-default-light="" aframe-injected=""></a-entity>
 </a-entity>
 
     
-      <a-box color="yellow" position="5 0 -5"> </a-box>
-      <a-entity  stop-audio-berlin play-audio-gunzenhausen onclick="gotogun()" position="-3 1.6 4.7" rotation="-12 -13 1" scale="3 3 3"  class="link"
+      
+      <a-entity  stop-audio-berlin play-audio-gunzenhausen onclick="gotogun()" position="-9 7.8 0.3" rotation="5 90 1" scale="3 3 3"  class="link"
   geometry="primitive: box; depth: 0.01; height: 1; width: 1.38"
   material="shader: flat; src: #postcard-gunzenhausen"
   sound="on: click; src: #click-sound"
@@ -492,7 +530,7 @@
   event-set__mouseleave="scale: 3 3 3">
   </a-entity>
 
-      <a-sky color="yellow"></a-sky>
+      <a-sky color="#ffc7d2"></a-sky>
     </a-entity>
     
     
@@ -503,24 +541,7 @@
   <a-sky material="color:  #22223b;  side:  back;  shader:  flat;  npot:  true;  offset:  [object Object];  repeat:  [object Object];  fog:  false"></a-sky>
     
 
-    <a-entity play-audio-berlin onclick="gotoberlin()" stop-audio-gunzenhausen position="-0.9s 2.98 -3" rotation="0 267 -39" scale="0.5 0.5 0.5" class="link" side="front"
-    geometry="primitive: plane; height: 1; width: 1.418"
-    material="shader: flat; src: #postcard-berlin"
-    sound="on: click; src: #click-sound"
-    event-set__mouseenter="scale: 1.2 1.2 1"
-    event-set__mouseleave="scale: 1 1 1"
-    animation="property: rotation; dur:4000; to:0 627 -39 ; loop: true; easing:linear;">
-    </a-entity>
-    <a-entity play-audio-berlin onclick="gotoberlin()" stop-audio-gunzenhausen position="-0.8 2.98 -3" rotation="0 267 -39" scale="0.5 0.5 0.5" class="link" side="back"
-    geometry="primitive: plane; height: 1; width: 1.418"
-    material="shader: flat; src: #postcard-berlin"
-    sound="on: click; src: #click-sound"
-    event-set__mouseenter="scale: 1.2 1.2 1"
-    event-set__mouseleave="scale: 1 1 1"
-    animation="property: rotation; dur:4000; to:0 627 -39 ; loop: true; easing:linear;">
-    </a-entity>
-
-
+   
     <a-entity gltf-model="#3dcake" position="-1 0.5 -3" scale="3 3 3" rotation="0 0 0" animation="property: rotation; dur:4000; to:0 360 0 ; loop: true; easing:linear;">
     </a-entity>
  
@@ -585,18 +606,20 @@
 <a-entity mixin="img-gun-h-6" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
 
 
-<a-entity play-audio-berlin stop-audio-gunzenhausen onclick="gotoberlin()" position="-1.5 1.46 0.25" rotation="-13.4 -0.5 -0.37" scale="2 2 2" class="link"
+<a-entity play-audio-berlin stop-audio-gunzenhausen onclick="gotoberlin()" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" scale="1.5 1.5 1.5" class="link"
     geometry="primitive: box; depth: 0.01 height: 1; width: 1.418 "
     material="shader: flat; src: #postcard-berlin"
     sound="on: click; src: #click-sound"
     event-set__mouseenter="scale: 2.2 2.2 2"
-    event-set__mouseleave="scale: 2 2 2">
+    event-set__mouseleave="scale: 2 2 2"
+    look-at="#moi">
     </a-entity>
 
 
 
  </a-entity>
 
+<a-entity light="color: #fff; type: ambient" data-aframe-default-light="" aframe-injected=""></a-entity>
  
       
     </a-scene>
@@ -607,12 +630,44 @@
     <script type="text/javascript">
 
 
+      AFRAME.registerComponent('camera-logger', {
+
+  schema: {
+    timestamp: {type: 'int'},
+    seconds: {type: 'int'} // default 0
+  },
+
+  log : function () {
+    var cameraEl = this.el.sceneEl.camera.el;
+    var rotation = cameraEl.getAttribute('rotation');
+    var worldPos = new THREE.Vector3();
+    worldPos.setFromMatrixPosition(cameraEl.object3D.matrixWorld);
+    console.log("Time: " + this.data.seconds 
+                + "; Camera Position: (" + worldPos.x.toFixed(2) + ", " + worldPos.y.toFixed(2) + ", " + worldPos.z.toFixed(2) 
+                + "); Camera Rotation: (" + rotation.x.toFixed(2) + ", " + rotation.y.toFixed(2) + ", " + rotation.z.toFixed(2) + ")");        
+  },
+
+  play: function () {
+    this.data.timestamp = Date.now();
+    this.log();
+  },
+
+  tick: function () {  
+    if (Date.now() - this.data.timestamp > 1000) {
+      this.data.timestamp += 1000;
+      this.data.seconds += 1;
+      this.log();
+    }
+  },
+})
+
+
   function gotoberlin() {
     document.getElementById('start').setAttribute('visible', 'false')
     document.getElementById('berlin').setAttribute('visible', 'true')
     document.getElementById('gun').setAttribute('visible', 'false')
-    document.getElementById('camera').setAttribute('position', '2 3.8 19')
-    document.getElementById('camera').setAttribute('rotation', '-10 0 3')
+    document.getElementById('camera').setAttribute('position', '8.4 1.23 1.16')
+    document.getElementById('camera').setAttribute('rotation', '15 64 0')
   }
 
    function gotogun() {
