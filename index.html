@@ -1,541 +1,406 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Entity-Component - Registry</title>
-    <meta name="description" content="Entity-Component - Registry">
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://unpkg.com/aframe-animation-component@3.2.1/dist/aframe-animation-component.min.js"></script>
-    <script src="script/dat.gui.min.js"></script>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+     
     <script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-extras.ocean@%5E3.5.x/dist/aframe-extras.ocean.min.js"></script>
-   <script src="https://cdn.rawgit.com/zcanter/aframe-gradient-sky/master/dist/gradientsky.min.js"></script>
-    <script src="https://unpkg.com/aframe-layout-component@4.3.0/dist/aframe-layout-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
+     <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
+     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+     <script src="https://unpkg.com/aframe-event-set-component@5.x.x/dist/aframe-event-set-component.min.js"></script>
+     <script src="https://unpkg.com/aframe-play-sound-on-event@1.0.2/dist/aframe-play-sound-on-event.min.js"></script>
+     <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;1,600&display=swap" rel="stylesheet">
+
+     <script>
+window.onload = function(){ 
+    document.querySelector("button").onclick = function() { 
+  document.querySelector("#loading").style.display = "none"
+} 
+};
 
 
+     </script>
+
+     <style type="text/css" media="screen">
+      
 
 
-<style>
+      #loading {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  background-color: blue;
+  color: white;
+  font-family: 'IBM Plex Mono', monospace;
 
-</style>
+
+}
+
+.pink {background-color: #ffc7d2; border-color: #ffc7d2}
+
+
+       
+     </style>
 
   </head>
 
-  <script>
 
-var ColorUpdates = function() {
-  this.displayOutline = false;
-  this.topColor = [255,0,0];
-  this.bottomColor = [0,121,255];
-  
-};
-
-
-
-window.onload = function() {
-  
-
-  document.querySelector("button").onclick = function() {
-    document.querySelector("#loading").style.display = "none"}
-
-
-   document.querySelector("button").onclick = function touchStarted() {
-  getAudioContext().resume();}
-
-
-
-};
-
-
-
-</script>
   <body>
-
-<div id="loading">
-  <button>
-"HELLO"
-</button>
-</div> 
-    
-<a-scene fog="color:  #AAB;  far:  30;  near:  0;  density:  0.00050">
- 
-
-
-
-
-  <a-assets>
-    
-    <img id="berlin-1" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-1.jpg" />
-    <a-mixin id="img-berlin-1" randomize="position:-10 -10 -10..10 10 10"  geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-1; opacity: 1.0; transparent:true" look-at="#moi"></a-mixin>
-
-    <img id="berlin-2" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-2.jpg" />
-    <a-mixin id="img-berlin-2" randomize="position:-10 -10 -10..10 10 10" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-2; opacity: 1.0; transparent: true; alphaTest:0.7" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-3" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-3.jpg" />
-    <a-mixin id="img-berlin-3" randomize="position:-10 -10 -10..10 10 10" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-3; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-4" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-4.jpg" />
-    <a-mixin id="img-berlin-4" randomize="position:-10 -10 -10..10 10 10" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-4; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-5" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-5.jpg" />
-    <a-mixin id="img-berlin-5" randomize="position:-10 -10 -10..10 10 10" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-5; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-6" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-6.jpg" />
-    <a-mixin id="img-berlin-6" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-6; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-7" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-7.jpg" />
-    <a-mixin id="img-berlin-7" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-7; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-8" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-8.jpg" />
-    <a-mixin id="img-berlin-8" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-8; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-9" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-9.jpg" />
-    <a-mixin id="img-berlin-9" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-9; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-10" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-10.jpg" />
-    <a-mixin id="img-berlin-10" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-10; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-11" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-11.jpg" />
-    <a-mixin id="img-berlin-11" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-11; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-12" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-12.jpg" />
-    <a-mixin id="img-berlin-12" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-12; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-13" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-13.jpg" />
-    <a-mixin id="img-berlin-13" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-13; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-14" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-14.jpg" />
-    <a-mixin id="img-berlin-14" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-14; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-15" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-15.jpg" />
-    <a-mixin id="img-berlin-15" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-15; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-16" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-16.jpg" />
-    <a-mixin id="img-berlin-16" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-16; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-17" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-17.jpg" />
-    <a-mixin id="img-berlin-17" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-17; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-18" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-18.jpg" />
-    <a-mixin id="img-berlin-18" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-18; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-19" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-19.jpg" />
-    <a-mixin id="img-berlin-19" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-19; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-20" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-20.jpg" />
-    <a-mixin id="img-berlin-20" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-20; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-21" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-21.jpg" />
-    <a-mixin id="img-berlin-21" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-21; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-22" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-22.jpg" />
-    <a-mixin id="img-berlin-22" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-22; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-23" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-23.jpg" />
-    <a-mixin id="img-berlin-23" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-23; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-24" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-24.jpg" />
-    <a-mixin id="img-berlin-24" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-24; opacity: 1.0; transparent:true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-25" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-25.jpg" />
-    <a-mixin id="img-berlin-25" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-25; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-26" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-26.jpg" />
-    <a-mixin id="img-berlin-26" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-26; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-27" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-27.jpg" />
-    <a-mixin id="img-berlin-27" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-27; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-28" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-28.jpg" />
-    <a-mixin id="img-berlin-28" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-28; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-29" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-29.jpg" />
-    <a-mixin id="img-berlin-29" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-29; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-30" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-30.jpg" />
-    <a-mixin id="img-berlin-30" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-30; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-31" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-31.jpg" />
-    <a-mixin id="img-berlin-31" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-31; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-32" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-32.jpg" />
-    <a-mixin id="img-berlin-32" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-32; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-33" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-33.jpg" />
-    <a-mixin id="img-berlin-33" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-33; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-34" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-34.jpg" />
-    <a-mixin id="img-berlin-34" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-34; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-35" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-35.jpg" />
-    <a-mixin id="img-berlin-35" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-35; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-36" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-36.jpg" />
-    <a-mixin id="img-berlin-36" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-36; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-37" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-37.jpg" />
-    <a-mixin id="img-berlin-37" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-37; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
- 
-    <img id="berlin-38" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-38.jpg" />
-    <a-mixin id="img-berlin-38" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-38; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-     <img id="berlin-h-1" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-1.jpg" />
-    <a-mixin id="img-berlin-h-1" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-1; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="berlin-h-2" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-2.jpg" />
-    <a-mixin id="img-berlin-h-2" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-2; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-    <img id="berlin-h-3" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-3.jpg" />
-    <a-mixin id="img-berlin-h-3" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-3; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-    <img id="berlin-h-4" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-4.jpg" />
-    <a-mixin id="img-berlin-h-4" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-4; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-    <img id="berlin-h-5" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-5.jpg" />
-    <a-mixin id="img-berlin-h-5" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-5; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-    <img id="berlin-h-6" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-6.jpg" />
-    <a-mixin id="img-berlin-h-6" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-6; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-    <img id="berlin-h-7" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-7.jpg" />
-    <a-mixin id="img-berlin-h-7" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-7; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-    <img id="berlin-h-8" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-8.jpg" />
-    <a-mixin id="img-berlin-h-8" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-8; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-    <img id="berlin-h-9" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-9.jpg" />
-    <a-mixin id="img-berlin-h-9" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-9; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-    
-
-<img id="gun-1" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-1.jpg" />
-<a-mixin id="img-gun-1" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-1; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-2" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-2.jpg" />
-<a-mixin id="img-gun-2" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-2; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-3" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-3.jpg" />
-<a-mixin id="img-gun-3" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-3; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-4" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-4.jpg" />
-<a-mixin id="img-gun-4" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-4; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-5" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-5.jpg" />
-<a-mixin id="img-gun-5" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-5; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-6" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-6.jpg" />
-<a-mixin id="img-gun-6" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-6; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-7" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-7.jpg" />
-<a-mixin id="img-gun-7" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-7; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-8" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-8.jpg" />
-<a-mixin id="img-gun-8" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-8; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-9" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-9.jpg" />
-<a-mixin id="img-gun-9" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-9; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-10" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-10.jpg" />
-<a-mixin id="img-gun-10" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-10; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-11" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-11.jpg" />
-<a-mixin id="img-gun-11" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-11; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-12" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-12.jpg" />
-<a-mixin id="img-gun-12" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-12; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-13" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-13.jpg" />
-<a-mixin id="img-gun-13" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-13; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-14" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-14.jpg" />
-<a-mixin id="img-gun-14" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-14; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-15" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-15.jpg" />
-<a-mixin id="img-gun-15" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-15; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-16" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-16.jpg" />
-<a-mixin id="img-gun-16" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-16; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-17" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-17.jpg" />
-<a-mixin id="img-gun-17" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-17; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-18" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-18.jpg" />
-<a-mixin id="img-gun-18" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-18; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-19" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-19.jpg" />
-<a-mixin id="img-gun-19" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-19; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-20" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-20.jpg" />
-<a-mixin id="img-gun-20" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-20; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-
-
-<img id="gun-21" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-21.jpg" />
-<a-mixin id="img-gun-21" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-21; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-22" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-22.jpg" />
-<a-mixin id="img-gun-22" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-22; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-23" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-23.jpg" />
-<a-mixin id="img-gun-23" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-23; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-24" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-24.jpg" />
-<a-mixin id="img-gun-24" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-24; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-25" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-25.jpg" />
-<a-mixin id="img-gun-25" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-25; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-26" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-26.jpg" />
-<a-mixin id="img-gun-26" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-26; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-27" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-27.jpg" />
-<a-mixin id="img-gun-27" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-27; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-28" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-28.jpg" />
-<a-mixin id="img-gun-28" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-28; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-29" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-29.jpg" />
-<a-mixin id="img-gun-29" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-29; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-30" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-30.jpg" />
-<a-mixin id="img-gun-30" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-30; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-
-
-<img id="gun-31" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-31.jpg" />
-<a-mixin id="img-gun-31" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-31; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-32" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-32.jpg" />
-<a-mixin id="img-gun-32" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-32; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-33" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-33.jpg" />
-<a-mixin id="img-gun-33" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-33; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-34" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-34.jpg" />
-<a-mixin id="img-gun-34" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-34; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-35" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-35.jpg" />
-<a-mixin id="img-gun-35" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-35; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-36" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-36.jpg" />
-<a-mixin id="img-gun-36" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-36; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-37" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-37.jpg" />
-<a-mixin id="img-gun-37" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-37; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-38" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-38.jpg" />
-<a-mixin id="img-gun-38" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-38; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-39" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-39.jpg" />
-<a-mixin id="img-gun-39" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-39; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-40" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-40.jpg" />
-<a-mixin id="img-gun-40" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-40; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-
-
-<img id="gun-41" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-41.jpg" />
-<a-mixin id="img-gun-41" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-41; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-42" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-42.jpg" />
-<a-mixin id="img-gun-42" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-42; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-43" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-43.jpg" />
-<a-mixin id="img-gun-43" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-43; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-44" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-44.jpg" />
-<a-mixin id="img-gun-44" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-44; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-45" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-45.jpg" />
-<a-mixin id="img-gun-45" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-45; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-46" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-46.jpg" />
-<a-mixin id="img-gun-46" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-46; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-47" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-47.jpg" />
-<a-mixin id="img-gun-47" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-47; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-48" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-48.jpg" />
-<a-mixin id="img-gun-48" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-48; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-49" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-49.jpg" />
-<a-mixin id="img-gun-49" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-49; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-50" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-50.jpg" />
-<a-mixin id="img-gun-50" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-50; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-
-<img id="gun-51" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-51.jpg" />
-<a-mixin id="img-gun-51" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-51; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-52" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-52.jpg" />
-<a-mixin id="img-gun-52" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-52; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-h-1" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-1.jpg" />
-<a-mixin id="img-gun-h-1" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-h-1; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-h-2" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-2.jpg" />
-<a-mixin id="img-gun-h-2" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-h-2; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-h-3" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-3.jpg" />
-<a-mixin id="img-gun-h-3" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-h-3; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-h-4" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-4.jpg" />
-<a-mixin id="img-gun-h-4" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-h-4; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-h-5" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-5.jpg" />
-<a-mixin id="img-gun-h-5" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-h-5; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-h-6" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-6.jpg" />
-<a-mixin id="img-gun-h-6" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-h-6; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-h-7" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-7.jpg" />
-<a-mixin id="img-gun-h-7" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-h-7; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-<img id="gun-h-8" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-8.jpg" />
-<a-mixin id="img-gun-h-8" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-h-8; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
-
-
-
-
-
-
-
-
-
-    <audio id="irene" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/irene.m4a" preload="auto"></audio>
-    <audio id="sibylle" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/sibylle.m4a" preload="auto"></audio>
-    <audio id="stephan" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/stephan.mp3" preload="auto"></audio>
-    <audio id="izamar" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/izamar.m4a" preload="auto"></audio>
-    <audio id="mexico" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/mexico.m4a" preload="auto"></audio>
-     <audio id="kuh" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/kuhglocken.m4a" preload="auto"></audio>
-
-      <audio id="lena" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/lena.mp4" preload="auto"></audio>
-
-   <a-asset-item id="cake" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/models/wedding_cake/scene.gltf">
+    <a-scene light="defaultLightsEnabled: false" >
       
-       
-       </a-asset-item>
-  
-  </a-assets>
+      <a-assets>
+
     
-  
-    
-<a-entity postion="0 0 0"> <a-camera id="moi" wasd-controls="fly:  true"><a-cursor></a-cursor></a-camera></a-entity>
+        <img id="berlin-1" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-1.jpg" />
+        <a-mixin id="img-berlin-1" randomize="position:-10 -10 -10..10 10 10"  geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-1; opacity: 1.0; transparent:true" look-at="#moi"></a-mixin>
 
-<a-box sound="src: #irene; on: click; loop: true; volume: 1; refDistance: 0.5; rolloffFactor: 10" material="" geometry=""></a-box>
+        <img id="berlin-2" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-2.jpg" />
+        <a-mixin id="img-berlin-2" randomize="position:-10 -10 -10..10 10 10" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-2; opacity: 1.0; transparent: true; alphaTest:0.7" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-3" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-3.jpg" />
+        <a-mixin id="img-berlin-3" randomize="position:-10 -10 -10..10 10 10" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-3; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-4" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-4.jpg" />
+        <a-mixin id="img-berlin-4" randomize="position:-10 -10 -10..10 10 10" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-4; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-5" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-5.jpg" />
+        <a-mixin id="img-berlin-5" randomize="position:-10 -10 -10..10 10 10" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-5; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-6" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-6.jpg" />
+        <a-mixin id="img-berlin-6" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-6; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-7" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-7.jpg" />
+        <a-mixin id="img-berlin-7" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-7; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-8" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-8.jpg" />
+        <a-mixin id="img-berlin-8" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-8; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-9" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-9.jpg" />
+        <a-mixin id="img-berlin-9" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-9; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-10" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-10.jpg" />
+        <a-mixin id="img-berlin-10" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-10; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-11" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-11.jpg" />
+        <a-mixin id="img-berlin-11" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-11; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-12" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-12.jpg" />
+        <a-mixin id="img-berlin-12" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-12; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-13" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-13.jpg" />
+        <a-mixin id="img-berlin-13" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-13; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-14" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-14.jpg" />
+        <a-mixin id="img-berlin-14" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-14; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-15" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-15.jpg" />
+        <a-mixin id="img-berlin-15" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-15; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-16" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-16.jpg" />
+        <a-mixin id="img-berlin-16" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-16; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-17" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-17.jpg" />
+        <a-mixin id="img-berlin-17" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-17; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-18" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-18.jpg" />
+        <a-mixin id="img-berlin-18" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-18; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-19" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-19.jpg" />
+        <a-mixin id="img-berlin-19" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-19; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-20" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-20.jpg" />
+        <a-mixin id="img-berlin-20" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-20; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-21" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-21.jpg" />
+        <a-mixin id="img-berlin-21" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-21; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-22" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-22.jpg" />
+        <a-mixin id="img-berlin-22" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-22; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-23" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-23.jpg" />
+        <a-mixin id="img-berlin-23" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-23; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-24" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-24.jpg" />
+        <a-mixin id="img-berlin-24" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-24; opacity: 1.0; transparent:true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-25" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-25.jpg" />
+        <a-mixin id="img-berlin-25" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-25; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-26" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-26.jpg" />
+        <a-mixin id="img-berlin-26" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-26; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-27" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-27.jpg" />
+        <a-mixin id="img-berlin-27" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-27; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-28" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-28.jpg" />
+        <a-mixin id="img-berlin-28" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-28; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-29" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-29.jpg" />
+        <a-mixin id="img-berlin-29" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-29; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-30" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-30.jpg" />
+        <a-mixin id="img-berlin-30" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-30; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-31" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-31.jpg" />
+        <a-mixin id="img-berlin-31" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-31; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-32" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-32.jpg" />
+        <a-mixin id="img-berlin-32" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-32; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-33" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-33.jpg" />
+        <a-mixin id="img-berlin-33" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-33; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-34" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-34.jpg" />
+        <a-mixin id="img-berlin-34" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-34; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-35" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-35.jpg" />
+        <a-mixin id="img-berlin-35" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-35; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-36" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-36.jpg" />
+        <a-mixin id="img-berlin-36" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-36; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-37" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-37.jpg" />
+        <a-mixin id="img-berlin-37" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-37; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+     
+        <img id="berlin-38" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-38.jpg" />
+        <a-mixin id="img-berlin-38" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #berlin-38; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="berlin-h-1" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-1.jpg" />
+        <a-mixin id="img-berlin-h-1" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-1; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="berlin-h-2" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-2.jpg" />
+        <a-mixin id="img-berlin-h-2" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-2; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+        <img id="berlin-h-3" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-3.jpg" />
+        <a-mixin id="img-berlin-h-3" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-3; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+        <img id="berlin-h-4" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-4.jpg" />
+        <a-mixin id="img-berlin-h-4" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-4; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+        <img id="berlin-h-5" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-5.jpg" />
+        <a-mixin id="img-berlin-h-5" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-5; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+        <img id="berlin-h-6" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-6.jpg" />
+        <a-mixin id="img-berlin-h-6" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-6; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+        <img id="berlin-h-7" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-7.jpg" />
+        <a-mixin id="img-berlin-h-7" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-7; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+        <img id="berlin-h-8" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-8.jpg" />
+        <a-mixin id="img-berlin-h-8" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-8; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+        <img id="berlin-h-9" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-9.jpg" />
+        <a-mixin id="img-berlin-h-9" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #berlin-h-9; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-1" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-1.jpg" />
+        <a-mixin id="img-gun-1" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-1; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-2" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-2.jpg" />
+        <a-mixin id="img-gun-2" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-2; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-3" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-3.jpg" />
+        <a-mixin id="img-gun-3" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-3; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-4" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-4.jpg" />
+        <a-mixin id="img-gun-4" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-4; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-5" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-5.jpg" />
+        <a-mixin id="img-gun-5" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-5; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-6" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-6.jpg" />
+        <a-mixin id="img-gun-6" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-6; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-7" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-7.jpg" />
+        <a-mixin id="img-gun-7" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-7; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-8" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-8.jpg" />
+        <a-mixin id="img-gun-8" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-8; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-9" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-9.jpg" />
+        <a-mixin id="img-gun-9" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-9; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-10" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-10.jpg" />
+        <a-mixin id="img-gun-10" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-10; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-11" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-11.jpg" />
+        <a-mixin id="img-gun-11" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-11; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-12" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-12.jpg" />
+        <a-mixin id="img-gun-12" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-12; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-13" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-13.jpg" />
+        <a-mixin id="img-gun-13" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-13; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-14" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-14.jpg" />
+        <a-mixin id="img-gun-14" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-14; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-15" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-15.jpg" />
+        <a-mixin id="img-gun-15" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-15; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-16" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-16.jpg" />
+        <a-mixin id="img-gun-16" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-16; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-17" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-17.jpg" />
+        <a-mixin id="img-gun-17" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-17; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-18" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-18.jpg" />
+        <a-mixin id="img-gun-18" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-18; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-19" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-19.jpg" />
+        <a-mixin id="img-gun-19" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-19; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-20" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-20.jpg" />
+        <a-mixin id="img-gun-20" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-20; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
 
 
-<a-entity light="type: ambient; color: #fff"></a-entity>
-<a-entity mixin="img-berlin-1" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #stephan; loop:true;  refDistance: 0.5; rolloffFactor: 10; autoplay:true; volume:0.8"></a-entity>
+
+        <img id="gun-21" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-21.jpg" />
+        <a-mixin id="img-gun-21" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-21; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-22" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-22.jpg" />
+        <a-mixin id="img-gun-22" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-22; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-23" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-23.jpg" />
+        <a-mixin id="img-gun-23" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-23; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-24" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-24.jpg" />
+        <a-mixin id="img-gun-24" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-24; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-25" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-25.jpg" />
+        <a-mixin id="img-gun-25" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-25; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-26" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-26.jpg" />
+        <a-mixin id="img-gun-26" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-26; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-27" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-27.jpg" />
+        <a-mixin id="img-gun-27" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-27; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-28" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-28.jpg" />
+        <a-mixin id="img-gun-28" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-28; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-29" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-29.jpg" />
+        <a-mixin id="img-gun-29" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-29; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-30" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-30.jpg" />
+        <a-mixin id="img-gun-30" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-30; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+
+
+        <img id="gun-31" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-31.jpg" />
+        <a-mixin id="img-gun-31" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-31; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-32" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-32.jpg" />
+        <a-mixin id="img-gun-32" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-32; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-33" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-33.jpg" />
+        <a-mixin id="img-gun-33" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-33; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-34" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-34.jpg" />
+        <a-mixin id="img-gun-34" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-34; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-35" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-35.jpg" />
+        <a-mixin id="img-gun-35" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-35; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-36" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-36.jpg" />
+        <a-mixin id="img-gun-36" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-36; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-37" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-37.jpg" />
+        <a-mixin id="img-gun-37" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-37; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-38" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-38.jpg" />
+        <a-mixin id="img-gun-38" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-38; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-39" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-39.jpg" />
+        <a-mixin id="img-gun-39" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-39; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-40" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-40.jpg" />
+        <a-mixin id="img-gun-40" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-40; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+
+
+        <img id="gun-41" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-41.jpg" />
+        <a-mixin id="img-gun-41" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-41; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-42" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-42.jpg" />
+        <a-mixin id="img-gun-42" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-42; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-43" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-43.jpg" />
+        <a-mixin id="img-gun-43" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-43; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-44" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-44.jpg" />
+        <a-mixin id="img-gun-44" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-44; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-45" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-45.jpg" />
+        <a-mixin id="img-gun-45" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-45; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-46" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-46.jpg" />
+        <a-mixin id="img-gun-46" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-46; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-47" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-47.jpg" />
+        <a-mixin id="img-gun-47" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-47; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-48" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-48.jpg" />
+        <a-mixin id="img-gun-48" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-48; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-49" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-49.jpg" />
+        <a-mixin id="img-gun-49" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-49; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-50" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-50.jpg" />
+        <a-mixin id="img-gun-50" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-50; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+
+        <img id="gun-51" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-51.jpg" />
+        <a-mixin id="img-gun-51" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-51; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-52" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-52.jpg" />
+        <a-mixin id="img-gun-52" geometry="primitive: plane;width: 1; height: 1.47;" material="src: #gun-52; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-h-1" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-1.jpg" />
+        <a-mixin id="img-gun-h-1" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #gun-h-1; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-h-2" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-2.jpg" />
+        <a-mixin id="img-gun-h-2" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #gun-h-2; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-h-3" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-3.jpg" />
+        <a-mixin id="img-gun-h-3" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #gun-h-3; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-h-4" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-4.jpg" />
+        <a-mixin id="img-gun-h-4" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #gun-h-4; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-h-5" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-5.jpg" />
+        <a-mixin id="img-gun-h-5" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #gun-h-5; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-h-6" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-6.jpg" />
+        <a-mixin id="img-gun-h-6" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #gun-h-6; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-h-7" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-7.jpg" />
+        <a-mixin id="img-gun-h-7" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #gun-h-7; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+        <img id="gun-h-8" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gun-h-8.jpg" />
+        <a-mixin id="img-gun-h-8" geometry="primitive: plane;width: 1.47; height: 1;" material="src: #gun-h-8; opacity: 1.0; transparent: true" look-at="#moi"></a-mixin>
+
+
+
+        <audio id="irene" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/irene.m4a" preload="auto"></audio>
+        <audio id="sibylle" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/sibylle.m4a" preload="auto"></audio>
+        <audio id="stephan" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/stephan.mp3" preload="auto"></audio>
+        <audio id="izamar" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/izamar.m4a" preload="auto"></audio>
         
-<a-entity mixin="img-berlin-2" random-spherical-position="lengthX: 180; lengthY: 90; radius: 11"></a-entity>
-<a-entity mixin="img-berlin-3" random-spherical-position="lengthX: 180; lengthY: 90; radius: 12"></a-entity>
-<a-entity mixin="img-berlin-4"  random-spherical-position="lengthX: 180; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-berlin-5" random-spherical-position="lengthX: 180; lengthY: 90; radius: 14"></a-entity>
-<a-entity mixin="img-berlin-6" random-spherical-position="lengthX: 180; lengthY: 90; radius: 15"></a-entity>
-<a-entity mixin="img-berlin-7" random-spherical-position="lengthX: 180; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-berlin-8" random-spherical-position="lengthX: 180; lengthY: 90; radius: 11"></a-entity>
-<a-entity mixin="img-berlin-9" random-spherical-position="lengthX: 180; lengthY: 90; radius: 12"></a-entity>
-<a-entity mixin="img-berlin-10" random-spherical-position="lengthX: 180; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-berlin-11" random-spherical-position="lengthX: 180; lengthY: 90; radius: 14"></a-entity>
-<a-entity mixin="img-berlin-12" random-spherical-position="lengthX: 180; lengthY: 90; radius: 15"></a-entity>
-<a-entity mixin="img-berlin-13" random-spherical-position="lengthX: 180; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-berlin-14" random-spherical-position="lengthX: 180; lengthY: 90; radius: 11"></a-entity>
-<a-entity mixin="img-berlin-15" random-spherical-position="lengthX: 180; lengthY: 90; radius: 12"></a-entity>
-<a-entity mixin="img-berlin-16" random-spherical-position="lengthX: 180; lengthY: 90; radius: 13"></a-entity>
-<a-entity mixin="img-berlin-17" random-spherical-position="lengthX: 180; lengthY: 90; radius: 14"></a-entity>
-<a-entity mixin="img-berlin-18" random-spherical-position="lengthX: 180; lengthY: 90; radius: 15" ></a-entity>
-<a-entity mixin="img-berlin-19" random-spherical-position="lengthX: 180; lengthY: 90; radius: 10"></a-entity>
-<a-entity mixin="img-berlin-20" random-spherical-position="lengthX: 180; lengthY: 90; radius: 11"></a-entity>
-<a-entity mixin="img-berlin-21" random-spherical-position="lengthX: 180; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-berlin-22" random-spherical-position="lengthX: 180; lengthY: 90; radius: 13"></a-entity>
-<a-entity mixin="img-berlin-23" random-spherical-position="lengthX: 180; lengthY: 90; radius: 14"></a-entity>
-<a-entity mixin="img-berlin-24" random-spherical-position="lengthX: 180; lengthY: 90; radius: 15" ></a-entity>
-<a-entity mixin="img-berlin-25" random-spherical-position="lengthX: 180; lengthY: 90; radius: 10"></a-entity>
-<a-entity mixin="img-berlin-26" random-spherical-position="lengthX: 180; lengthY: 90; radius: 11"></a-entity>
-<a-entity mixin="img-berlin-27" random-spherical-position="lengthX: 180; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-berlin-28" random-spherical-position="lengthX: 180; lengthY: 90; radius: 13"></a-entity>
-<a-entity mixin="img-berlin-29" random-spherical-position="lengthX: 180; lengthY: 90; radius: 14"></a-entity>
-<a-entity mixin="img-berlin-30" random-spherical-position="lengthX: 180; lengthY: 90; radius: 15"></a-entity>
-<a-entity mixin="img-berlin-31" random-spherical-position="lengthX: 180; lengthY: 90; radius: 10"></a-entity>
-<a-entity mixin="img-berlin-32" random-spherical-position="lengthX: 180; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-berlin-33" random-spherical-position="lengthX: 180; lengthY: 90; radius: 12"></a-entity>
-<a-entity mixin="img-berlin-34" random-spherical-position="lengthX: 180; lengthY: 90; radius: 13"></a-entity>
-<a-entity mixin="img-berlin-35" random-spherical-position="lengthX: 180; lengthY: 90; radius: 14" ></a-entity>
-<a-entity mixin="img-berlin-36" random-spherical-position="lengthX: 180; lengthY: 90; radius: 15"></a-entity>
-<a-entity mixin="img-berlin-37" random-spherical-position="lengthX: 180; lengthY: 90; radius: 10"></a-entity>
-<a-entity mixin="img-berlin-38" random-spherical-position="lengthX: 180; lengthY: 90; radius: 11" ></a-entity>
-
-<a-entity mixin="img-berlin-h-1" random-spherical-position="lengthX: 180; lengthY: 90; radius: 12"></a-entity>
-
-<a-entity mixin="img-berlin-h-3" random-spherical-position="lengthX: 180; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-berlin-h-4" random-spherical-position="lengthX: 180; lengthY: 90; radius: 14"></a-entity>
-<a-entity mixin="img-berlin-h-5" random-spherical-position="lengthX: 180; lengthY: 90; radius: 15"></a-entity>
-
-<a-entity mixin="img-berlin-h-6" random-spherical-position="lengthX: 180; lengthY: 90; radius: 10" sound="src: #izamar; autoplay:true; loop:true;  refDistance: 0.5; rolloffFactor: 10; volume:0.8"></a-entity>
-
-<a-entity mixin="img-berlin-h-3" random-spherical-position="lengthX: 180; lengthY: 90; radius: 11" sound="src: #lena; autoplay:true; loop:true;  refDistance: 0.5; rolloffFactor: 10; volume:1"></a-entity>
-
-<a-entity mixin="img-berlin-h-7" random-spherical-position="lengthX: 180; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-berlin-h-8" random-spherical-position="lengthX: 180; lengthY: 90; radius: 13"></a-entity>
-<a-entity mixin="img-berlin-h-9" random-spherical-position="lengthX: 180; lengthY: 90; radius: 14"></a-entity>
-
-
-
-<a-entity mixin="img-gun-1" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-2" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-3" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-gun-4" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-gun-5" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-6" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-7" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-gun-8" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-gun-9" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-10" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-12" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-gun-12" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-13" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-14" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-gun-15" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-gun-16" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-17" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-18" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-gun-19" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-gun-20" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-21" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-22" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-gun-23" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-gun-24" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-25" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-26" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-gun-27" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-gun-28" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-29" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-30" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-gun-31" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-gun-32" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-33" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-34" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-gun-35" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-gun-36" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-37" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-38" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-gun-39" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-gun-40" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-41" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-42" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-gun-43" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-gun-44" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-45" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-46" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-gun-47" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-gun-48" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-49" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-50" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-gun-51" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-gun-52" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-h-1" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-h-2" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 12" ></a-entity>
-<a-entity mixin="img-gun-h-3" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 13" ></a-entity>
-<a-entity mixin="img-gun-h-4" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 10" ></a-entity>
-<a-entity mixin="img-gun-h-5" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 11" ></a-entity>
-<a-entity mixin="img-gun-h-6" random-spherical-position="lengthX: 180; startY: 90; lengthY: 90; radius: 12" ></a-entity>
+        <audio id="lena" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/lena.mp4" preload="auto"></audio>
+         <audio id="warthe" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/warthe.m4a" preload="auto"></audio>
+        <audio id="pizza" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/Having Pizza.m4a" preload="auto"></audio>
+        <audio id="gerado" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/Gerado and the flowers.m4a" preload="auto"></audio>
+        <audio id="documents" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/Standesamt Documents Flowers Pin.m4a" preload="auto"></audio>
+        <audio id="coffee" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/Coffee at Leuchtstoff.m4a" preload="auto"></audio>
+        <audio id="irenebush" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/Irene in the bushes.m4a" preload="auto"></audio>
+        <audio id="erikacamping" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/Erika und Hilde Camping.m4a" preload="auto"></audio>
+         <audio id="cake" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/cake.m4a" preload="auto"></audio>
+        <audio id="sibylle-julius" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/sibylle and me.m4a" preload="auto"></audio>
+        <audio id="friends" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/friends kitchen.m4a" preload="auto"></audio>
+        <audio id="boys" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/the boys.m4a" preload="auto"></audio>
+        <audio id="seyda" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/Seyda cigkoefte.m4a" preload="auto"></audio>
+        <audio id="kathi" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/Kathi install.m4a" preload="auto"></audio>
+        <audio id="bbq" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/bbq.m4a" preload="auto"></audio>
+        <audio id="roof" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/all under one roof.m4a" preload="auto"></audio>
+        <audio id="flowers" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/flowers.m4a" preload="auto"></audio>
+        <audio id="toni" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/audio/nico and toni.m4a" preload="auto"></audio>
 
 
 
@@ -543,25 +408,390 @@ window.onload = function() {
 
 
 
+     <a-asset-item id="peony" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/models/peony_at_home/scene.gltf"></a-asset-item> 
 
+     <a-asset-item id="3dcake" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/models/wedding_cake/scene.gltf"></a-asset-item>
 
+      <img id="postcard-berlin" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-postcard.jpeg">
+      <img id="postcard-gunzenhausen" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gunzenhausen-postcard.jpeg">
+      </a-assets>
 
-<a-entity gltf-model="#cake" position="-1 0.5 -3" rotation="0 0 0" animation="property: rotation; dur:4000; to:0 360 ; loop: true; easing:linear;">
-     <a-animation attribute="rotation"
-                    dur="3000"
-                    to="0 360 0"
-                    repeat="indefinite"
-                    easing= "linear"></a-animation>
-      </a-entity>
-
-
-  <a-sky material="shader: gradient; topColor: 255 255 255; bottomColor: 0 121 255;"></a-sky>
+ 
+  
+    <a-entity id="camera" position="0 -24 1"> <a-camera camera-logger id="moi" wasd-controls="fly:  true"><a-cursor></a-cursor></a-camera></a-entity>
+ 
+<div id="loading">
+  <div class="px-4 py-5 my-5 text-center">
+    <div class="col-lg-6 col-md-6 mx-auto">
+      <img class="d-block mx-auto mb-4 img-fluid" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-3.jpg" width="450px" alt=""></div>
+    <h1 class="display-5 fw-bold"><i>Madlen & Julius Wedding Anniversary</i></h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">This is our documentation for the two days of our marriage celebration in 2021. The idea is to explore the days by walking around the images, listening to the stories connected to photos.</p>
+      <p>So, it is best viewed on a computer with a keyboard. You can use the W A S D keys to move around. Headphones on!</p>
+      <p><img class="d-block mx-auto mb-4" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/controls.png" alt="" width="20%" height:auto></p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button type="button" class="btn btn-light btn-lg px-4 gap-3">Let's go!</button>
+      </div>
       
+    </div>
+
+  </div>
+
+  <div class="px-4 py-3 my-3 text-center">
+      <p>Made with A-Frame</p><p>3d models by <a href="https://sketchfab.com/3d-models/peony-at-home-c95c7a325d6a4fb4977204b87d77c803" target="_blank">HoangHiepVu</a>, cake by <a href="https://sketchfab.com/3d-models/wedding-cake-a8bebb0d1a2646549ef42b60e1e85ded" target="_blank">Jayasurya Aasaithambi</a></p></div>
+
+  
+
+</div>
+
+
+   <a-entity  id="start" visible="true">
+
+
+  
+    <a-entity play-audio-berlin stop-audio-gunzenhausen onclick="gotoberlin()" position="-1.5 -22 -3" class="link"
+    geometry="primitive: box; depth: 0.01 height: 1; width: 1.418 "
+    material="shader: flat; src: #postcard-berlin"
+    sound="src: #cake"
+    event-set__mouseenter="scale: 1.2 1.2 1"
+    event-set__mouseleave="scale: 1 1 1">
+    </a-entity>
+
+  <a-entity  stop-audio-berlin play-audio-gunzenhausen onclick="gotogun()" position="1.3 -22 -3"  class="link"
+  geometry="primitive: box; depth: 0.01; height: 1; width: 1.38"
+  material="shader: flat; src: #postcard-gunzenhausen"
+ 
+
+  
+  event-set__mouseenter="scale: 1.2 1.2 1"
+  event-set__mouseleave="scale: 1 1 1" >
+  </a-entity>
+
+      <a-sky color="blue"></a-sky>
+     
+    </a-entity>
+
+    <a-entity id="berlin" visible="false">
+    
+
+      <a-entity gltf-model="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/models/peony_at_home/scene.gltf" scale="2.1 2.1 2.1" position="0 -8.43322 9" rotation=""></a-entity>
+
+
+      <a-entity>
+
+        <a-entity mixin="img-berlin-1" scale="1.5 1.5 1.5"  event-set__mouseleave="scale: 2 2 2" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+        
+        <a-entity mixin="img-berlin-2" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
+        <a-entity mixin="img-berlin-3" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12"></a-entity>
+        <a-entity mixin="img-berlin-4"   scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+        <a-entity mixin="img-berlin-5" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+        <a-entity mixin="img-berlin-6" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
+        <a-entity mixin="img-berlin-7" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+        <a-entity mixin="img-berlin-8" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13"></a-entity>
+        <a-entity mixin="img-berlin-9" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+        <a-entity mixin="img-berlin-10"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+        <a-entity mixin="img-berlin-11"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12"></a-entity>
+        <a-entity mixin="img-berlin-12"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13"></a-entity>
+        <a-entity mixin="img-berlin-13"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+        <a-entity mixin="img-berlin-14"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
+        <a-entity mixin="img-berlin-15"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12"></a-entity>
+        <a-entity mixin="img-berlin-16"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13"></a-entity>
+        <a-entity mixin="img-berlin-17"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #irenebush; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.2" event-set__mouseenter="sound.volume: 1" ></a-entity>
+        <a-entity mixin="img-berlin-18"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+        <a-entity mixin="img-berlin-19"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" class="audio-berlin" sound="src: #stephan; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.6" event-set__mouseenter="scale: 1.5 1.5 1.5" event-set__mouseleave="scale: 1 1 1" ></a-entity>
+        <a-entity mixin="img-berlin-20"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13"></a-entity>
+        <a-entity mixin="img-berlin-21"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+        <a-entity mixin="img-berlin-22"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" sound="src: #pizza; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
+        <a-entity mixin="img-berlin-23"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12"></a-entity>
+        <a-entity mixin="img-berlin-24"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+        <a-entity mixin="img-berlin-25"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" sound="src: #gerado; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
+        <a-entity mixin="img-berlin-26"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
+        <a-entity mixin="img-berlin-27"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+        <a-entity mixin="img-berlin-28"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13"></a-entity>
+        <a-entity mixin="img-berlin-29"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+        <a-entity mixin="img-berlin-30"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
+        <a-entity mixin="img-berlin-31"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12"></a-entity>
+        <a-entity mixin="img-berlin-32"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+        <a-entity mixin="img-berlin-33"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+        <a-entity mixin="img-berlin-34"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" class="audio-berlin" sound="src: #izamar; loop:true;  refDistance: 1; rolloffFactor: 20; volume:0.3"></a-entity>
+        <a-entity mixin="img-berlin-35"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+        <a-entity mixin="img-berlin-36"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" class="audio-berlin" sound="src: #warthe; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
+        <a-entity mixin="img-berlin-37"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+        <a-entity mixin="img-berlin-38"  scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5" class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" sound="src: #documents; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8" ></a-entity>
+
+        <a-entity mixin="img-berlin-h-1" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" sound="src: #erikacamping; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
+
+        <a-entity mixin="img-berlin-h-3" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" sound="src: #coffee; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8" ></a-entity>
+        <a-entity mixin="img-berlin-h-4" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  random-spherical-position="lengthX: 180; lengthY: 180; radius: 10"></a-entity>
+        <a-entity mixin="img-berlin-h-5" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
+
+        <a-entity mixin="img-berlin-h-6" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+
+        <a-entity mixin="img-berlin-h-3" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  class="audio-berlin" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" sound="src: #lena; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:1"></a-entity>
+
+        <a-entity mixin="img-berlin-h-7" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+        <a-entity mixin="img-berlin-h-8" scale="1.5 1.5 1.5" event-set__mouseenter="scale: 2.1 2.1 2.1" event-set__mouseleave="scale: 1.5 1.5 1.5"  random-spherical-position="lengthX: 180; lengthY: 180; radius: 11"></a-entity>
+        
+      <a-entity light="intensity: 0.0; castShadow: true" position="-0.5 3.0227 1" data-aframe-default-light="" aframe-injected=""></a-entity>
+</a-entity>
+
+    
+      
+      <a-entity  stop-audio-berlin play-audio-gunzenhausen onclick="gotogun()" position="-9 7.8 0.3" rotation="5 90 1" scale="3 3 3"  class="link"
+  geometry="primitive: box; depth: 0.01; height: 1; width: 1.38"
+  material="shader: flat; src: #postcard-gunzenhausen"
+  sound="on: click; src: #click-sound"
+  event-set__mouseenter="scale: 3.2 3.2 3"
+  event-set__mouseleave="scale: 3 3 3">
+  </a-entity>
+
+      <a-sky color="#ffc7d2"></a-sky>
+    </a-entity>
+    
+    
+      
+
+ <a-entity id="gun" visible="false">
+
+  <a-sky material="color:  #22223b;  side:  back;  shader:  flat;  npot:  true;  offset:  [object Object];  repeat:  [object Object];  fog:  false"></a-sky>
+    
+
+   
+    <a-entity gltf-model="#3dcake" position="-1 0.5 -3" scale="3 3 3" rotation="0 0 0" animation="property: rotation; dur:4000; to:0 360 0 ; loop: true; easing:linear;">
+    </a-entity>
+ 
+
+<a-entity mixin="img-gun-1" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" class="audio-gunzenhausen" sound="src: #cake; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8" ></a-entity>
+<a-entity mixin="img-gun-2" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" class="audio-gunzenhausen" sound="src: #flowers; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8" ></a-entity>
+<a-entity mixin="img-gun-3" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" class="audio-gunzenhausen" sound="src: #sibylle; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.5"></a-entity>
+<a-entity mixin="img-gun-4" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+<a-entity mixin="img-gun-5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-gun-6" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" class="audio-gunzenhausen" sound="src: #roof; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8" ></a-entity>
+<a-entity mixin="img-gun-7" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+<a-entity mixin="img-gun-8" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+<a-entity mixin="img-gun-9" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-gun-10" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+<a-entity mixin="img-gun-12" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+<a-entity mixin="img-gun-12" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-gun-13" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+<a-entity mixin="img-gun-14" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+<a-entity mixin="img-gun-15" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+<a-entity mixin="img-gun-16" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-gun-17" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+<a-entity mixin="img-gun-18" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+<a-entity mixin="img-gun-19" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+<a-entity mixin="img-gun-20" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" class="audio-gunzenhausen" sound="src: #bbq; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8" ></a-entity>
+<a-entity mixin="img-gun-21" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+<a-entity mixin="img-gun-22" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+<a-entity mixin="img-gun-23" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+<a-entity mixin="img-gun-24" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" class="audio-gunzenhausen" sound="src: #seyda; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
+<a-entity mixin="img-gun-25" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+<a-entity mixin="img-gun-26" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+<a-entity mixin="img-gun-27" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" class="audio-gunzenhausen" sound="src: #kathi; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8" ></a-entity>
+<a-entity mixin="img-gun-28" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-gun-29" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+<a-entity mixin="img-gun-30" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+<a-entity mixin="img-gun-31" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+<a-entity mixin="img-gun-32" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-gun-33" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+<a-entity mixin="img-gun-34" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+<a-entity mixin="img-gun-35" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+<a-entity mixin="img-gun-36" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-gun-37" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+<a-entity mixin="img-gun-38" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+<a-entity mixin="img-gun-39" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+<a-entity mixin="img-gun-40" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-gun-41" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+<a-entity mixin="img-gun-42" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+<a-entity mixin="img-gun-43" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+<a-entity mixin="img-gun-44" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" class="audio-gunzenhausen" sound="src: #boys; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
+<a-entity mixin="img-gun-45" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+<a-entity mixin="img-gun-46" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" class="audio-gunzenhausen" sound="src: #toni; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
+<a-entity mixin="img-gun-47" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" class="audio-gunzenhausen" sound="src: #friends; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
+<a-entity mixin="img-gun-48" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-gun-49" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+<a-entity mixin="img-gun-50" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" class="audio-gunzenhausen" sound="src: #sibylle-julius; loop:true;  refDistance: 1.8; rolloffFactor: 20; volume:0.8"></a-entity>
+<a-entity mixin="img-gun-51" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+<a-entity mixin="img-gun-52" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-gun-h-1" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+<a-entity mixin="img-gun-h-2" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+<a-entity mixin="img-gun-h-3" random-spherical-position="lengthX: 180; lengthY: 180; radius: 13" ></a-entity>
+<a-entity mixin="img-gun-h-4" random-spherical-position="lengthX: 180; lengthY: 180; radius: 10" ></a-entity>
+<a-entity mixin="img-gun-h-5" random-spherical-position="lengthX: 180; lengthY: 180; radius: 11" ></a-entity>
+<a-entity mixin="img-gun-h-6" random-spherical-position="lengthX: 180; lengthY: 180; radius: 12" ></a-entity>
+
+
+<a-entity play-audio-berlin stop-audio-gunzenhausen onclick="gotoberlin()" position="-4 10 -13" scale="1.5 1.5 1.5" class="link"
+    geometry="primitive: box; depth: 0.01 height: 1; width: 1.418 "
+    material="shader: flat; src: #postcard-berlin"
+    sound="on: click; src: #click-sound"
+    event-set__mouseenter="scale: 2.2 2.2 2"
+    event-set__mouseleave="scale: 2 2 2"
+    look-at="#moi">
+    </a-entity>
+
+
+
+ </a-entity>
+
+<a-entity light="color: #fff; type: ambient" data-aframe-default-light="" aframe-injected=""></a-entity>
+ 
       
     </a-scene>
+    
+   
+
+    
+    <script type="text/javascript">
+
+
+      AFRAME.registerComponent('camera-logger', {
+
+  schema: {
+    timestamp: {type: 'int'},
+    seconds: {type: 'int'} // default 0
+  },
+
+  log : function () {
+    var cameraEl = this.el.sceneEl.camera.el;
+    var rotation = cameraEl.getAttribute('rotation');
+    var worldPos = new THREE.Vector3();
+    worldPos.setFromMatrixPosition(cameraEl.object3D.matrixWorld);
+    console.log("Time: " + this.data.seconds 
+                + "; Camera Position: (" + worldPos.x.toFixed(2) + ", " + worldPos.y.toFixed(2) + ", " + worldPos.z.toFixed(2) 
+                + "); Camera Rotation: (" + rotation.x.toFixed(2) + ", " + rotation.y.toFixed(2) + ", " + rotation.z.toFixed(2) + ")");        
+  },
+
+  play: function () {
+    this.data.timestamp = Date.now();
+    this.log();
+  },
+
+  tick: function () {  
+    if (Date.now() - this.data.timestamp > 1000) {
+      this.data.timestamp += 1000;
+      this.data.seconds += 1;
+      this.log();
+    }
+  },
+})
+
+
+  function gotoberlin() {
+    document.getElementById('start').setAttribute('visible', 'false')
+    document.getElementById('berlin').setAttribute('visible', 'true')
+    document.getElementById('gun').setAttribute('visible', 'false')
+    document.getElementById('camera').setAttribute('position', '8.4 1.23 1.16')
+    document.getElementById('camera').setAttribute('rotation', '15 64 0')
+  }
+
+   function gotogun() {
+    document.getElementById('start').setAttribute('visible', 'false')
+    document.getElementById('berlin').setAttribute('visible', 'false')
+    document.getElementById('gun').setAttribute('visible', 'true')
+    document.getElementById('camera').setAttribute('position', '-4.7 5.6 0.9')
+    document.getElementById('camera').setAttribute('rotation', '-6 -0 0')
+
+  }
+
+  AFRAME.registerComponent('play-audio-berlin', {
+            init: function () {
+
+              this.onClick = this.onClick.bind(this);
+              
+            },
+
+            play: function () {
+              this.el.addEventListener('click', this.onClick);
+            },
+            pause: function () {
+              this.el.removeEventListener('click', this.onClick);
+            },
+            onClick: function (evt) {
+             let entity = document.querySelectorAll('.audio-berlin');
+              for (let item of entity) {
+                item.components.sound.playSound();
+             }
+            }
+        }) 
+
+
+  AFRAME.registerComponent('stop-audio-berlin', {
+            init: function () {
+
+              this.onClick = this.onClick.bind(this);
+              
+            },
+
+            play: function () {
+              this.el.addEventListener('click', this.onClick);
+            },
+            pause: function () {
+              this.el.removeEventListener('click', this.onClick);
+            },
+            onClick: function (evt) {
+             let entity = document.querySelectorAll('.audio-berlin');
+              for (let item of entity) {
+                item.components.sound.stopSound();
+             }
+            }
+        }) 
 
 
 
+    AFRAME.registerComponent('play-audio-gunzenhausen', {
+            init: function () {
+
+              this.onClick = this.onClick.bind(this);
+              
+            },
+
+            play: function () {
+              this.el.addEventListener('click', this.onClick);
+            },
+            pause: function () {
+              this.el.removeEventListener('click', this.onClick);
+            },
+
+            onClick: function (evt) {
+             let entity = document.querySelectorAll('.audio-gunzenhausen');
+              for (let item of entity) {
+                item.components.sound.playSound();
+             }
+             
+            }
+            
+
+        })
+
+AFRAME.registerComponent('stop-audio-gunzenhausen', {
+            init: function () {
+
+              this.onClick = this.onClick.bind(this);
+              
+            },
+
+            play: function () {
+              this.el.addEventListener('click', this.onClick);
+            },
+            pause: function () {
+              this.el.removeEventListener('click', this.onClick);
+            },
+
+            onClick: function (evt) {
+             let entity = document.querySelectorAll('.audio-gunzenhausen');
+              for (let item of entity) {
+                item.components.sound.stopSound();
+             }
+             
+            }
+            
+
+        }); 
+
+
+
+  </script>
 
 
   </body>
