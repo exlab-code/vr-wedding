@@ -22,6 +22,16 @@ window.onload = function(){
     document.querySelector("button").onclick = function() { 
   document.querySelector("#loading").style.display = "none"
 } 
+
+document.querySelector("#help").onclick = function() { 
+  document.querySelector("#realhelp").style.display = "block"
+} 
+
+document.querySelector("#okay").onclick = function() { 
+  document.querySelector("#realhelp").style.display = "none"
+} 
+
+
 };
 
 
@@ -38,26 +48,33 @@ body {color: white;
   height: 100vh;
   z-index: 10000;
   background-color: blue;
-  color: white;
-  font-family: 'IBM Plex Mono', monospace;
-
-
 }
 
 #help {
-  z-index: 10000;
+  z-index: 11999;
 
   width: 100px;
   height: 100px;
-  background-color: blue;
+  background-color: transparent;
   position: fixed;
-  border-color: white;
-  border-radius: 30px;
-  border-style: solid;
-  right: 30px;
-  top: 30px;
+  
+  right: 3vw;
+  top: 3vh;
 }
 
+
+#realhelp {
+  z-index: 9998;
+  left: 5vw;
+  top: 5vh;
+  position: fixed;
+  width: 90vw;
+  
+  z-index: 10004;
+  background-color: blue;
+  display: none;
+  color: white;
+}
 
        
      </style>
@@ -66,6 +83,54 @@ body {color: white;
 
 
   <body>
+
+    <div id="loading">
+  <div class="px-4 py-3 my-5 text-center">
+    <div class="col-lg-6 col-md-6 mx-auto">
+      <img class="d-block mx-auto mb-4 img-fluid" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-wedding-intro.png" width="400px" alt=""></div>
+    <h1 class="display-5 fw-bold"><i>Madlen & Julius Wedding Anniversary</i></h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">This is our documentation for the two days of our marriage celebration in 2021. The idea is to explore the days by walking around the images, listening to the stories connected to photos.</p>
+      <p>It is best viewed on a computer with a keyboard. You can use the W A S D keys to move around. Headphones on! It is almost 100mb, so give it some time to load!</p>
+      <p><img class="d-block mx-auto mb-4" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/controls.png" alt="" width="60%" height:auto></p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button type="button" class="btn btn-light btn-lg px-4 gap-3">Let's go!</button>
+      </div>
+      
+    </div>
+
+  </div>
+
+  <div class="px-4 py-1 text-center">
+      <p>Made with A-Frame</p><p>3d models by <a href="https://sketchfab.com/3d-models/peony-at-home-c95c7a325d6a4fb4977204b87d77c803" target="_blank">HoangHiepVu</a>, cake by <a href="https://sketchfab.com/3d-models/wedding-cake-a8bebb0d1a2646549ef42b60e1e85ded" target="_blank">Jayasurya Aasaithambi</a></p></div>
+
+  
+
+</div>
+
+    <div id="help" class="text-center"><a href="#"><img class="img-fluid" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/help.png" alt=""></a></div>
+
+    <div id="realhelp">
+     
+  <div class="px-4 py-3 my-5 text-center">
+    <div class="col-lg-6 col-md-6 mx-auto">
+      </div>
+    <h1 class="display-5 fw-bold"><i>How does this work?</i></h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">This is our documentation for the two days of our marriage celebration in 2021. The idea is to explore the days by walking around the images, listening to the stories connected to photos.</p>
+      <p>It is best viewed on a computer with a keyboard. You can use the W A S D keys to move around. Headphones on! It is almost 100mb, so give it some time to load!</p>
+      <p><img class="d-block mx-auto mb-4" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/controls.png" alt="" width="60%" height:auto></p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button id="okay" type="button" class="btn btn-light btn-lg px-4 gap-3">Okay!</button>
+      </div>
+      
+    </div>
+
+  </div>
+ </div>
+
+
+
     <a-scene light="defaultLightsEnabled: false" >
       
       <a-assets>
@@ -436,31 +501,7 @@ body {color: white;
   
     <a-entity id="camera" position="0 -24 1"> <a-camera id="moi" wasd-controls="fly:  true"><a-cursor></a-cursor></a-camera></a-entity>
  
-<div id="help" class="text-center"><p>How?<br>What?<br>Help!</p></div>
 
-<div id="loading">
-  <div class="px-4 py-3 my-5 text-center">
-    <div class="col-lg-6 col-md-6 mx-auto">
-      <img class="d-block mx-auto mb-4 img-fluid" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-wedding-intro.png" width="400px" alt=""></div>
-    <h1 class="display-5 fw-bold"><i>Madlen & Julius Wedding Anniversary</i></h1>
-    <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">This is our documentation for the two days of our marriage celebration in 2021. The idea is to explore the days by walking around the images, listening to the stories connected to photos.</p>
-      <p>It is best viewed on a computer with a keyboard. You can use the W A S D keys to move around. Headphones on! It is almost 100mb, so give it some time to load!</p>
-      <p><img class="d-block mx-auto mb-4" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/controls.png" alt="" width="60%" height:auto></p>
-      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-        <button type="button" class="btn btn-light btn-lg px-4 gap-3">Let's go!</button>
-      </div>
-      
-    </div>
-
-  </div>
-
-  <div class="px-4 py-1 text-center">
-      <p>Made with A-Frame</p><p>3d models by <a href="https://sketchfab.com/3d-models/peony-at-home-c95c7a325d6a4fb4977204b87d77c803" target="_blank">HoangHiepVu</a>, cake by <a href="https://sketchfab.com/3d-models/wedding-cake-a8bebb0d1a2646549ef42b60e1e85ded" target="_blank">Jayasurya Aasaithambi</a></p></div>
-
-  
-
-</div>
 
 
    <a-entity  id="start" visible="true">
@@ -571,7 +612,7 @@ body {color: white;
 
  <a-entity id="gun" visible="false">
 
-  <a-sky material="color:  #22223b;  side:  back;  shader:  flat;  npot:  true;  offset:  [object Object];  repeat:  [object Object];  fog:  false"></a-sky>
+  <a-sky material="color:  #FEF2A6;  side:  back;  shader:  flat;  npot:  true;  offset:  [object Object];  repeat:  [object Object];  fog:  false"></a-sky>
     
 
    
