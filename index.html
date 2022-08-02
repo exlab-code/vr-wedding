@@ -413,7 +413,7 @@ window.onload = function(){
      <a-asset-item id="3dcake" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/models/wedding_cake/scene.gltf"></a-asset-item>
 
       <img id="postcard-berlin" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-postcard.jpeg">
-      <img id="postcard-gunzenhausen" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gunzenhausen-postcard.jpeg">
+      <img id="postcard-gunzenhausen" crossorigin="anonymous" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/gunzenhausen-postcard.jpg">
       </a-assets>
 
  
@@ -423,7 +423,7 @@ window.onload = function(){
 <div id="loading">
   <div class="px-4 py-5 my-5 text-center">
     <div class="col-lg-6 col-md-6 mx-auto">
-      <img class="d-block mx-auto mb-4 img-fluid" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-h-3.jpg" width="450px" alt=""></div>
+      <img class="d-block mx-auto mb-4 img-fluid" src="https://raw.githubusercontent.com/exlab-code/vr-wedding/main/img/berlin-wedding-intro.png" width="450px" alt=""></div>
     <h1 class="display-5 fw-bold"><i>Madlen & Julius Wedding Anniversary</i></h1>
     <div class="col-lg-6 mx-auto">
       <p class="lead mb-4">This is our documentation for the two days of our marriage celebration in 2021. The idea is to explore the days by walking around the images, listening to the stories connected to photos.</p>
@@ -451,7 +451,7 @@ window.onload = function(){
   
     <a-entity play-audio-berlin stop-audio-gunzenhausen onclick="gotoberlin()" position="-1.5 -22 -3" class="link"
     geometry="primitive: box; depth: 0.01 height: 1; width: 1.418 "
-    material="shader: flat; src: #postcard-berlin"
+    material="shader: flat; src: #postcard-berlin; transparent: true"
     sound="src: #cake"
     event-set__mouseenter="scale: 1.2 1.2 1"
     event-set__mouseleave="scale: 1 1 1">
@@ -459,7 +459,7 @@ window.onload = function(){
 
   <a-entity  stop-audio-berlin play-audio-gunzenhausen onclick="gotogun()" position="1.3 -22 -3"  class="link"
   geometry="primitive: box; depth: 0.01; height: 1; width: 1.38"
-  material="shader: flat; src: #postcard-gunzenhausen"
+  material="shader: flat; src: #postcard-gunzenhausen; transparent: true"
  
 
   
